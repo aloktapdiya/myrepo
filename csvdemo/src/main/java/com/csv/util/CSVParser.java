@@ -11,19 +11,19 @@ public class CSVParser implements AllCSVParser<CsvDomainData> {
 
 	private final char separator=DEFAULT_SEPARATOR;
 
-    private String pending;
+    private String pendingItems;
     private boolean inField = false;
 
     protected String[] parseLine(String nextLine, boolean multi) throws IOException {
 
-        if (!multi && pending != null) {
-            pending = null;
+        if (!multi && pendingItems != null) {
+            pendingItems = null;
         }
 
         if (nextLine == null) {
-            if (pending != null) {
-                String s = pending;
-                pending = null;
+            if (pendingItems != null) {
+                String s = pendingItems;
+                pendingItems = null;
                 return new String[]{s};
             }
             return null;
@@ -32,18 +32,15 @@ public class CSVParser implements AllCSVParser<CsvDomainData> {
         List<String> tokensOnThisLine = new ArrayList<String>();
         StringBuilder sb = new StringBuilder(nextLine.length() + READ_BUFFER_SIZE);
         boolean inQuotes = false;
-        if (pending != null) {
-            sb.append(pending);
-            pending = null;
-           // inQuotes = !this.ignoreQuotations;
+        if (pendingItems != null) {
+            sb.append(pendingItems);
+            pendingItems = null;
         }
-        // line is done - check status
         if (inQuotes ) {
             if (multi) {
-                // continuing a quoted section, re-append newline
                 sb.append('\n');
-                pending = sb.toString();
-                sb = null; // this partial content is not to be added to field list yet
+                pendingItems = sb.toString();
+                sb = null; 
             } else {
                 throw new IOException("Un-terminated quoted field at end of CSV line");
             }

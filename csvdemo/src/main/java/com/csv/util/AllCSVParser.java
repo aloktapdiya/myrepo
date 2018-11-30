@@ -7,7 +7,7 @@ import com.csv.domainobject.CsvDomainData;
 
 
 /**
- *  methods common to all types 
+ *  methods common to all types of csv
  */
 
 public interface AllCSVParser<T> {
