@@ -177,18 +177,18 @@ public class CSVReader<T> {
 		return field;
 	}
 	
-/*	public CSVReader<T> process(CsvProcessor<T> processsor) {
+public CSVReader<T> parse(AllCSVParser<T> parser) {
 		if(!this.initCompleted) {
 			initialize();
 		}
 		
-		if (null != processsor) {
+		if (null != parser) {
 			List<T> list = getData();
 			for (T obj : list) {
-				obj = processsor.process(obj);
+				obj = parser.parse(obj);
 			}
 		}
 		return this;
-	}*/
+	}
 
 }

@@ -10,6 +10,9 @@ public class CsvDomainData {
 	
 	private String key;
 	
+	private String value;
+	
+	
 	public String getKey() {
 		return key;
 	}
@@ -20,7 +23,6 @@ public class CsvDomainData {
 
 
 
-	private String value;
 
 	public String getValue() {
 		return value;
