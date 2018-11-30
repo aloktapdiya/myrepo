@@ -7,15 +7,14 @@ import java.util.List;
 public class CSVParser implements AllCSVParser {
 
 
-    private final char separator;
+    @SuppressWarnings("unused")
+	private final char separator=DEFAULT_SEPARATOR;
 
-    private final char quotechar;
+    private final char quotechar=DEFAULT_QUOTE_CHARACTER;
 
-    private final char escape;
+    private final char escape=DEFAULT_ESCAPE_CHARACTER;
 
-    private final boolean ignoreLeadingWhiteSpace;
 
-    private final boolean ignoreQuotations;
     private String pending;
     private boolean inField = false;
 
@@ -44,11 +43,10 @@ public class CSVParser implements AllCSVParser {
         List<String> tokensOnThisLine = new ArrayList<String>();
         StringBuilder sb = new StringBuilder(nextLine.length() + READ_BUFFER_SIZE);
         boolean inQuotes = false;
-        boolean fromQuotedField = false;
         if (pending != null) {
             sb.append(pending);
             pending = null;
-            inQuotes = !this.ignoreQuotations;
+           // inQuotes = !this.ignoreQuotations;
         }
         for (int i = 0; i < nextLine.length(); i++) {
 
@@ -64,7 +62,6 @@ public class CSVParser implements AllCSVParser {
 
                     inQuotes = !inQuotes;
                     if (atStartOfField(sb)) {
-                        fromQuotedField = true;
                     }
 
                     // the tricky case of an embedded quote in the middle: a,bc"d"ef,g
@@ -75,7 +72,7 @@ public class CSVParser implements AllCSVParser {
 
         }
         // line is done - check status
-        if (inQuotes && !ignoreQuotations) {
+        if (inQuotes ) {
             if (multi) {
                 // continuing a quoted section, re-append newline
                 sb.append('\n');
@@ -85,7 +82,6 @@ public class CSVParser implements AllCSVParser {
                 throw new IOException("Un-terminated quoted field at end of CSV line");
             }
             if (inField) {
-                fromQuotedField = true;
             }
         } else {
             inField = false;
@@ -124,7 +120,7 @@ public class CSVParser implements AllCSVParser {
      * @return True if we should process as if we are inside quotes.
      */
     private boolean inQuotes(boolean inQuotes) {
-        return (inQuotes && !ignoreQuotations) || inField;
+        return (inQuotes) || inField;
     }
 
     /**
@@ -193,6 +189,26 @@ public class CSVParser implements AllCSVParser {
                 && nextLine.length() > (i + 1)  // there is indeed another character to check.
                 && isCharacterEscapable(nextLine.charAt(i + 1));
     }
+
+	public char getSeparator() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public char getQuotechar() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public String[] parseLineMulti(String nextLine) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String[] parseLine(String nextLine) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }
