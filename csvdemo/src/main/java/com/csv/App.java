@@ -10,7 +10,7 @@ import com.csv.domainobject.CsvDomainData;
 import com.csv.util.CSVParser;
 import com.csv.util.CSVReader;
 
-
+ 
 @Component
 public class App implements CommandLineRunner {
 
