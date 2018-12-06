@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-myrepo
+jar jmock-junit4-2.6.0.jar has to be added 
 ======
 
 myrepo
